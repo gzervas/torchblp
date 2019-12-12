@@ -11,7 +11,7 @@ I used the MATLAB code of Andrews, Gentzkow, and Shapiro to construct GMM instru
 
 The ```squarem``` implementation is adapted from https://github.com/jeffgortmaker/pyblp/tree/master/pyblp.
 
-The code relies on various undocumented tricks to make this work on GPU.
+The code relies on various undocumented tricks to make this work on a GPU.
 
 ## Usage
 
