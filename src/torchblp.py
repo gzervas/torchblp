@@ -168,23 +168,6 @@ def batch_invert_shares(
     return delta_vec, res
 
 
-def batch_shares_mu(
-        delta,
-        mu,
-        pm,
-        weights):
-
-    util = torch.unsqueeze(delta, 1) + mu
-    util_max, __ = torch.max(util, 0)
-    adj_util = util - util_max
-    exp_util = torch.exp(adj_util)
-    total_exp_util = torch.mm(pm, exp_util)
-    s = exp_util / (total_exp_util + torch.exp(-util_max))
-    s = s * weights
-    s = torch.sum(s, dim=1)
-    return s
-
-
 def gmm_loss(
         log_market_shares,
         prod_char,
@@ -342,7 +325,7 @@ if __name__ == '__main__':
     uniq_model_ids = np.unique(model_ids)
     model_ids_to_rows = np.repeat(uniq_model_ids[:, None], model_ids.shape[0], axis=1)
     model_ids_to_rows = (model_ids_to_rows == model_ids).astype(np.float32)
-    model_ids_to_rows = model_ids_to_rows = np.tile(model_ids_to_rows, 2)
+    model_ids_to_rows = np.tile(model_ids_to_rows, 2)
     model_ids_to_rows = torch.as_tensor(model_ids_to_rows, device=device, dtype=t_type)
 
     # joint ownership matrix
